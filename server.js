@@ -12,6 +12,16 @@ function respondHello (req, res) {
   res.end(JSON.stringify({ msg: 'hello' }))
 }
 
+app.post('/encode', (req, res) => {
+  let data = JSON.stringify(req.body);
+console.log(typeof data);
+  if (!data) {
+    return res.status(400).json({ error: 'Missing data field in the request body.' });
+  }
+  const encodedData = Buffer.from(data).toString('base64');
+  res.json({ encodedData });
+});
+
 server.listen(PORT)
 console.log(`Server listening on port ${PORT}`)
 
